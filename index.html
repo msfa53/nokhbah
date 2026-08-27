@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نُخبة | منصة استئجار المعلمين الخصوصيين</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-main: #0b0f19;
+            --bg-card: #161e31;
+            --bg-glass: rgba(15, 23, 42, 0.95);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --primary: #38bdf8;
+            --primary-glow: rgba(56, 189, 248, 0.25);
+            --secondary: #10b981;
+            --accent: #f59e0b;
+            --border: rgba(255, 255, 255, 0.08);
+            --card-border: rgba(255, 255, 255, 0.12);
+            --shadow: 0 10px 25px -5px rgba(0,0,0,0.3);
+            --topbar-bg: #070a12;
+        }
+
+        [data-theme="light"] {
+            --bg-main: #f1f5f9;
+            --bg-card: #ffffff;
+            --bg-glass: rgba(255, 255, 255, 0.95);
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --primary: #0284c7;
+            --primary-glow: rgba(2, 132, 199, 0.2);
+            --secondary: #059669;
+            --accent: #d97706;
+            --border: rgba(0, 0, 0, 0.08);
+            --card-border: rgba(0, 0, 0, 0.08);
+            --shadow: 0 10px 20px -5px rgba(0,0,0,0.05);
+            --topbar-bg: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Tajawal', sans-serif;
+            transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Top Navigation Bar */
+        .top-bar {
+            background-color: var(--topbar-bg);
+            border-bottom: 1px solid var(--border);
+            padding: 0.5rem 2rem;
+            font-size: 0.85rem;
+        }
+
+        .top-bar-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .top-links {
+            display: flex;
+            gap: 1.2rem;
+            list-style: none;
+        }
+
+        .top-links button {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .top-links button:hover {
+            color: var(--primary);
+        }
+
+        /* Main Header */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: var(--bg-glass);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .navbar {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .theme-toggle {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.1rem;
+        }
+
+        .cta-btn {
+            background: linear-gradient(135deg, var(--primary), #2563eb);
+            color: #fff;
+            padding: 0.65rem 1.4rem;
+            border-radius: 30px;
+            border: none;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .cta-btn:hover {
+            opacity: 0.95;
+            transform: translateY(-1px);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 3.5rem 2rem 1.5rem;
+            text-align: center;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(56, 189, 248, 0.1);
+            border: 1px solid var(--primary-glow);
+            color: var(--primary);
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 1.2rem;
+        }
+
+        .hero h1 {
+            font-size: 2.8rem;
+            font-weight: 900;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        .hero h1 span {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            margin-bottom: 2rem;
+        }
+
+        /* Filter Controls */
+        .search-container {
+            background: var(--bg-card);
+            border: 1px solid var(--card-border);
+            padding: 1.5rem;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        .gender-toggle-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 1.2rem;
+        }
+
+        .gender-btn {
+            background: var(--bg-main);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 10px 24px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .gender-btn.active[data-gender="all"] {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+        }
+
+        .gender-btn.active[data-gender="female"] {
+            background: #ec4899;
+            color: #fff;
+            border-color: #ec4899;
+        }
+
+        .gender-btn.active[data-gender="male"] {
+            background: #3b82f6;
+            color: #fff;
+            border-color: #3b82f6;
+        }
+
+        .subject-tags {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 0.8rem;
+            margin-bottom: 1rem;
+            scrollbar-width: thin;
+        }
+
+        .tag-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 6px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            white-space: nowrap;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .tag-btn.active, .tag-btn:hover {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+        }
+
+        .search-bar {
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-input {
+            width: 100%;
+            background: var(--bg-main);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            padding: 0.8rem 1.2rem;
+            border-radius: 12px;
+            outline: none;
+            font-size: 1rem;
+        }
+
+        .search-input:focus {
+            border-color: var(--primary);
+        }
+
+        /* Sorting Bar UI */
+        .sort-wrapper {
+            max-width: 1280px;
+            margin: 2rem auto 0;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .sort-title {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+        }
+
+        .sort-pills {
+            display: flex;
+            gap: 8px;
+            background: var(--bg-card);
+            padding: 6px;
+            border-radius: 14px;
+            border: 1px solid var(--card-border);
+            box-shadow: var(--shadow);
+            overflow-x: auto;
+        }
+
+        .sort-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 8px 14px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+        }
+
+        .sort-btn:hover {
+            color: var(--text-main);
+        }
+
+        .sort-btn.active {
+            background: var(--bg-main);
+            color: var(--primary);
+            border: 1px solid var(--border);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        /* Teacher Cards Grid */
+        .container {
+            max-width: 1280px;
+            margin: 1.5rem auto 2.5rem;
+            padding: 0 2rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .teacher-card {
+            background: var(--bg-card);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+
+        .teacher-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .bestseller-badge {
+            position: absolute;
+            top: -10px;
+            left: 15px;
+            background: linear-gradient(135deg, #f59e0b, #d97706);
+            color: #fff;
+            font-size: 0.75rem;
+            font-weight: 800;
+            padding: 3px 10px;
+            border-radius: 20px;
+            box-shadow: 0 4px 10px rgba(245, 158, 11, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.8rem;
+        }
+
+        .teacher-details h3 {
+            font-size: 1.15rem;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .meta-badges {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+            margin-top: 6px;
+            flex-wrap: wrap;
+        }
+
+        .gender-tag {
+            font-size: 0.75rem;
+            padding: 2px 8px;
+            border-radius: 10px;
+        }
+
+        .gender-tag.female {
+            background: rgba(236, 72, 153, 0.15);
+            color: #ec4899;
+        }
+
+        .gender-tag.male {
+            background: rgba(59, 130, 246, 0.15);
+            color: #3b82f6;
+        }
+
+        .nat-tag {
+            font-size: 0.75rem;
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-muted);
+            padding: 2px 8px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .spec-badge {
+            font-size: 0.8rem;
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--secondary);
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-weight: 700;
+        }
+
+        .rating {
+            color: var(--accent);
+            font-size: 0.85rem;
+        }
+
+        .card-body {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin: 0.8rem 0;
+            line-height: 1.4;
+        }
+
+        .card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-top: 1px solid var(--border);
+            padding-top: 0.8rem;
+        }
+
+        .price-tag {
+            font-size: 1.2rem;
+            font-weight: 800;
+        }
+
+        .price-tag span {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        .book-btn {
+            background: var(--bg-main);
+            color: var(--text-main);
+            border: 1px solid var(--border);
+            padding: 0.5rem 1rem;
+            border-radius: 10px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        .book-btn:hover {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+        }
+
+        /* Center Modal Overlay */
+        .center-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 3000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.25s ease;
+        }
+
+        .center-modal-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .center-modal-card {
+            background: var(--bg-card);
+            border: 1px solid var(--card-border);
+            padding: 2.2rem;
+            border-radius: 24px;
+            max-width: 440px;
+            width: 92%;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+            transform: scale(0.92);
+            transition: transform 0.25s ease;
+            position: relative;
+        }
+
+        .center-modal-overlay.active .center-modal-card {
+            transform: scale(1);
+        }
+
+        /* Special Secret Modal Styling */
+        .secret-modal-card {
+            border: 2px solid var(--accent);
+            text-align: center;
+            background: linear-gradient(145deg, var(--bg-card), #1e293b);
+        }
+
+        .secret-icon {
+            width: 70px;
+            height: 70px;
+            background: rgba(245, 158, 11, 0.15);
+            color: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            margin: 0 auto 1.2rem;
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+
+        .secret-modal-card h2 {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--text-main);
+            margin-bottom: 0.8rem;
+            background: linear-gradient(135deg, #f59e0b, #10b981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .secret-modal-card p {
+            font-size: 1.25rem;
+            color: var(--text-main);
+            font-weight: 700;
+            line-height: 1.5;
+            margin-bottom: 1.8rem;
+        }
+
+        .modal-close-icon {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.3rem;
+            cursor: pointer;
+        }
+
+        .modal-close-icon:hover {
+            color: var(--text-main);
+        }
+
+        /* Drawers for Top Bar Side Tabs */
+        .drawer-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 2000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .drawer-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .drawer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 440px;
+            max-width: 90%;
+            height: 100%;
+            background: var(--bg-card);
+            border-right: 1px solid var(--card-border);
+            z-index: 2001;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease;
+            padding: 2.5rem 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow-y: auto;
+        }
+
+        .drawer-overlay.active .drawer {
+            transform: translateX(0);
+        }
+
+        .drawer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 1rem;
+        }
+
+        .close-drawer {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.4rem;
+            cursor: pointer;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+            text-align: right;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            margin-bottom: 0.4rem;
+            color: var(--text-muted);
+        }
+
+        .form-group input, .form-group textarea, .form-group select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: var(--bg-main);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text-main);
+            outline: none;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            border-color: var(--primary);
+        }
+
+        /* Payment Method Options Grid */
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: 1.2rem 0;
+        }
+
+        .pay-method-btn {
+            background: var(--bg-main);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 0.8rem;
+            color: var(--text-main);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .pay-method-btn.active {
+            border-color: var(--primary);
+            background: rgba(56, 189, 248, 0.08);
+            color: var(--primary);
+        }
+
+        .pay-method-btn i {
+            font-size: 1.4rem;
+        }
+
+        /* Toast Notifications */
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--secondary);
+            color: #fff;
+            padding: 0.8rem 1.4rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transform: translateY(100px);
+            transition: transform 0.2s ease;
+            z-index: 4000;
+        }
+
+        .toast.show {
+            transform: translateY(0);
+        }
+
+        .faq-item {
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .faq-item h4 {
+            font-size: 0.95rem;
+            margin-bottom: 0.3rem;
+            color: var(--primary);
+        }
+
+        .faq-item p {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .top-bar-container { flex-direction: column; gap: 8px; }
+            .sort-wrapper { flex-direction: column; align-items: flex-start; }
+            .payment-methods { grid-template-columns: repeat(2, 1fr); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <div class="top-bar-container">
+            <ul class="top-links">
+                <li><button onclick="openTabDrawer('support')"><i class="fa-solid fa-headset"></i> الدعم الفني المباشر</button></li>
+                <li><button onclick="openTabDrawer('faq')"><i class="fa-solid fa-circle-question"></i> الأسئلة الشائعة</button></li>
+                <li><button onclick="openTabDrawer('guarantee')"><i class="fa-solid fa-shield-halved"></i> ضمان الجودة والاسترجاع</button></li>
+                <li><button onclick="openTabDrawer('pricing')"><i class="fa-solid fa-tags"></i> الباقات والخصومات</button></li>
+            </ul>
+            <div style="color: var(--text-muted); font-size: 0.8rem; display: flex; gap: 15px; align-items: center;">
+                <span><i class="fa-solid fa-phone"></i> 8001234567</span>
+                <span><i class="fa-solid fa-clock"></i> 24/7 متواجدون</span>
+            </div>
+        </div>
+    </div>
+
+    <header>
+        <nav class="navbar">
+            <a href="#" class="logo">
+                <div class="logo-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+                نُخبة
+            </a>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle" title="تبديل المظهر">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+                <button class="cta-btn" onclick="openTeacherLoginModal()">دخول المعلمين</button>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <div class="badge"><i class="fa-solid fa-star"></i> المنصة المعتمدة للقدرات والتحصيلي والمواد الدراسية</div>
+        <h1>اختر معلّمك المفضل <span>حسب الجنس والجنسية والتخصص</span></h1>
+        <p>دروس خصوصية مباشرة ومضمونة لجميع المراحل الدراسية مع نخبة الكفاءات</p>
+
+        <div class="search-container">
+            <div class="gender-toggle-group">
+                <button class="gender-btn active" data-gender="all" onclick="filterGender('all')">
+                    <i class="fa-solid fa-users"></i> الجميع
+                </button>
+                <button class="gender-btn" data-gender="female" onclick="filterGender('female')">
+                    <i class="fa-solid fa-user-nurse"></i> قسم المعلمات (بنات)
+                </button>
+                <button class="gender-btn" data-gender="male" onclick="filterGender('male')">
+                    <i class="fa-solid fa-user-tie"></i> قسم المعلمين (بنين)
+                </button>
+            </div>
+
+            <div class="subject-tags">
+                <button class="tag-btn active" onclick="filterSubject('all')">الكل</button>
+                <button class="tag-btn" onclick="filterSubject('قدرات')">قدرات عامة</button>
+                <button class="tag-btn" onclick="filterSubject('تحصيلي')">تحصيلي علمي</button>
+                <button class="tag-btn" onclick="filterSubject('step')">STEP</button>
+                <button class="tag-btn" onclick="filterSubject('رياضيات')">رياضيات</button>
+                <button class="tag-btn" onclick="filterSubject('فيزياء')">فيزياء</button>
+                <button class="tag-btn" onclick="filterSubject('كيمياء')">كيمياء</button>
+                <button class="tag-btn" onclick="filterSubject('أحياء')">أحياء</button>
+                <button class="tag-btn" onclick="filterSubject('إنجليزية')">لغة إنجليزية</button>
+                <button class="tag-btn" onclick="filterSubject('برمجة')">برمجة</button>
+            </div>
+
+            <div class="search-bar">
+                <input type="text" id="searchInput" class="search-input" placeholder="ابحث باسم المعلم، الجنسية، أو المادة الدراسية..." onkeyup="applyFilters()">
+            </div>
+        </div>
+    </section>
+
+    <div class="sort-wrapper">
+        <div class="sort-title">
+            <i class="fa-solid fa-arrow-down-short-wide"></i> ترتيب المعلمين حسب:
+        </div>
+        <div class="sort-pills">
+            <button class="sort-btn active" onclick="setSortMode('default', this)">
+                <i class="fa-solid fa-sliders"></i> الافتراضي
+            </button>
+            <button class="sort-btn" onclick="setSortMode('highest_rating', this)">
+                <i class="fa-solid fa-star"></i> الأعلى تقييماً
+            </button>
+            <button class="sort-btn" onclick="setSortMode('lowest_rating', this)">
+                <i class="fa-regular fa-star"></i> الأقل تقييماً
+            </button>
+            <button class="sort-btn" onclick="setSortMode('bestseller', this)">
+                <i class="fa-solid fa-fire"></i> الأكثر طلباً (الأكثر مبيعاً)
+            </button>
+            <button class="sort-btn" onclick="setSortMode('price_low', this)">
+                <i class="fa-solid fa-arrow-down-1-9"></i> الأقل سعراً
+            </button>
+            <button class="sort-btn" onclick="setSortMode('price_high', this)">
+                <i class="fa-solid fa-arrow-up-9-1"></i> الأعلى سعراً
+            </button>
+        </div>
+    </div>
+
+    <main class="container">
+        <div class="grid" id="teacherGrid">
+            
+            <div class="teacher-card" data-gender="female" data-subject="قدرات تحصيلي رياضيات" data-rating="4.9" data-sales="210" data-price="130" data-bestseller="true">
+                <div class="bestseller-badge"><i class="fa-solid fa-fire"></i> الأكثر مبيعاً</div>
+                <div>
+                    <div class="card-header">
+                        <div class="teacher-details">
+                            <h3>أ. سارة القحطاني</h3>
+                            <div class="meta-badges">
+                                <span class="gender-tag female">معلمة</span>
+                                <span class="nat-tag"><i class="fa-solid fa-location-dot"></i> سعودية</span>
+                            </div>
+                        </div>
+                        <div class="rating"><i class="fa-solid fa-star"></i> 4.9 (210 حصة)</div>
+                    </div>
+                    <span class="spec-badge">قدرات كمي & تحصيلي</span>
+                    <div class="card-body">خبرة 9 سنوات في تدريس القدرات الكمي وشرح تجميعات التحصيلي الحديثة والرياضيات.</div>
+                </div>
+                <div class="card-footer">
+                    <div class="price-tag">130 ر.س <span>/ساعة</span></div>
+                    <button class="book-btn" onclick="openPayment('أ. سارة القحطاني', 130)">حجز وتأكيد</button>
+                </div>
+            </div>
+
+            <div class="teacher-card" data-gender="male" data-subject="step إنجليزية" data-rating="5.0" data-sales="340" data-price="150" data-bestseller="true">
+                <div class="bestseller-badge"><i class="fa-solid fa-fire"></i> الأكثر مبيعاً</div>
+                <div>
+                    <div class="card-header">
+                        <div class="teacher-details">
+                            <h3>د. خالد الشمري</h3>
+                            <div class="meta-badges">
+                                <span class="gender-tag male">معلم</span>
+                                <span class="nat-tag"><i class="fa-solid fa-location-dot"></i> سعودي</span>
+                            </div>
+                        </div>
+                        <div class="rating"><i class="fa-solid fa-star"></i> 5.0 (340 حصة)</div>
+                    </div>
+                    <span class="spec-badge">اختبار STEP & إنجليزي</span>
+                    <div class="card-body">متخصص في إعداد الطلاب لااختبار كفايات اللغة الإنجليزية STEP وقواعد اللغة.</div>
+                </div>
+                <div class="card-footer">
+                    <div class="price-tag">150 ر.س <span>/ساعة</span></div>
+                    <button class="book-btn" onclick="openPayment('د. خالد الشمري', 150)">حجز وتأكيد</button>
+                </div>
+            </div>
+
+            <div class="teacher-card" data-gender="female" data-subject="كيمياء أحياء تحصيلي" data-rating="4.7" data-sales="95" data-price="110" data-bestseller="false">
+                <div>
+                    <div class="card-header">
+                        <div class="teacher-details">
+                            <h3>أ. مريم المصري</h3>
+                            <div class="meta-badges">
+                                <span class="gender-tag female">معلمة</span>
+                                <span class="nat-tag"><i class="fa-solid fa-location-dot"></i> مصرية</span>
+                            </div>
+                        </div>
+                        <div class="rating"><i class="fa-solid fa-star"></i> 4.7 (95 حصة)</div>
+                    </div>
+                    <span class="spec-badge">كيمياء & أحياء</span>
+                    <div class="card-body">شرح مبسط لمنهج الكيمياء والأحياء للمرحلة الثانوية مع حل الاختبارات السابقة.</div>
+                </div>
+                <div class="card-footer">
+                    <div class="price-tag">110 ر.س <span>/ساعة</span></div>
+                    <button class="book-btn" onclick="openPayment('أ. مريم المصري', 110)">حجز وتأكيد</button>
+                </div>
+            </div>
+
+            <div class="teacher-card" data-gender="male" data-subject="فيزياء رياضيات تحصيلي" data-rating="4.8" data-sales="118" data-price="125" data-bestseller="false">
+                <div>
+                    <div class="card-header">
+                        <div class="teacher-details">
+                            <h3>أ. طارق النابلسي</h3>
+                            <div class="meta-badges">
+                                <span class="gender-tag male">معلم</span>
+                                <span class="nat-tag"><i class="fa-solid fa-location-dot"></i> أردني</span>
+                            </div>
+                        </div>
+                        <div class="rating"><i class="fa-solid fa-star"></i> 4.8 (118 حصة)</div>
+                    </div>
+                    <span class="spec-badge">فيزياء & تحصيلي علمي</span>
+                    <div class="card-body">استاذ الفيزياء والرياضيات للمراحل الإعدادية والثانوية وتبسيط القوانين الفيزيائية.</div>
+                </div>
+                <div class="card-footer">
+                    <div class="price-tag">125 ر.س <span>/ساعة</span></div>
+                    <button class="book-btn" onclick="openPayment('أ. طارق النابلسي', 125)">حجز وتأكيد</button>
+                </div>
+            </div>
+
+            <div class="teacher-card" data-gender="female" data-subject="قدرات" data-rating="4.6" data-sales="160" data-price="120" data-bestseller="false">
+                <div>
+                    <div class="card-header">
+                        <div class="teacher-details">
+                            <h3>أ. نورة الغامدي</h3>
+                            <div class="meta-badges">
+                                <span class="gender-tag female">معلمة</span>
+                                <span class="nat-tag"><i class="fa-solid fa-location-dot"></i> سعودية</span>
+                            </div>
+                        </div>
+                        <div class="rating"><i class="fa-solid fa-star"></i> 4.6 (160 حصة)</div>
+                    </div>
+                    <span class="spec-badge">قدرات لفظي & استيعاب المقروء</span>
+                    <div class="card-body">تدريب مكثف على أسئلة القسم اللفظي واستراتيجيات الحل السريع لاختبار القدرات.</div>
+                </div>
+                <div class="card-footer">
+                    <div class="price-tag">120 ر.س <span>/ساعة</span></div>
+                    <button class="book-btn" onclick="openPayment('أ. نورة الغامدي', 120)">حجز وتأكيد</button>
+                </div>
+            </div>
+
+            <div class="teacher-card" data-gender="male" data-subject="برمجة رياضيات" data-rating="4.9" data-sales="280" data-price="160" data-bestseller="true">
+                <div class="bestseller-badge"><i class="fa-solid fa-fire"></i> الأكثر مبيعاً</div>
+                <div>
+                    <div class="card-header">
+                        <div class="teacher-details">
+                            <h3>م. أحمد سليمان</h3>
+                            <div class="meta-badges">
+                                <span class="gender-tag male">معلم</span>
+                                <span class="nat-tag"><i class="fa-solid fa-location-dot"></i> مصري</span>
+                            </div>
+                        </div>
+                        <div class="rating"><i class="fa-solid fa-star"></i> 4.9 (280 حصة)</div>
+                    </div>
+                    <span class="spec-badge">علوم الحاسب & Python</span>
+                    <div class="card-body">تعليم أساسيات البرمجة للمبتدئين وطلاب الجامعات والتحضير لمشاريع التخرج.</div>
+                </div>
+                <div class="card-footer">
+                    <div class="price-tag">160 ر.س <span>/ساعة</span></div>
+                    <button class="book-btn" onclick="openPayment('م. أحمد سليمان', 160)">حجز وتأكيد</button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <div class="center-modal-overlay" id="secretModal">
+        <div class="center-modal-card secret-modal-card">
+            <button class="modal-close-icon" onclick="closeSecretModal()"><i class="fa-solid fa-xmark"></i></button>
+            <div class="secret-icon">
+                <i class="fa-solid fa-sack-dollar"></i>
+            </div>
+            <h2>رسالة خاصة 🚀</h2>
+            <p>We will make it and become rich!</p>
+            <button class="cta-btn" style="width: 100%; padding: 0.8rem;" onclick="closeSecretModal()">أتفق تماماً! 💪</button>
+        </div>
+    </div>
+
+    <div class="center-modal-overlay" id="teacherLoginModal">
+        <div class="center-modal-card">
+            <button class="modal-close-icon" onclick="closeTeacherLoginModal()"><i class="fa-solid fa-xmark"></i></button>
+            <div style="text-align: center; margin-bottom: 1.5rem;">
+                <div class="logo-icon" style="margin: 0 auto 12px; width: 50px; height: 50px; font-size: 1.3rem;">
+                    <i class="fa-solid fa-chalkboard-user"></i>
+                </div>
+                <h2>بوابة دخول المعلمين</h2>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 4px;">قم بتسجيل الدخول لمتابعة جدول دروسك وحجوزات الطلاب</p>
+            </div>
+            <form onsubmit="event.preventDefault(); processTeacherLogin();">
+                <div class="form-group">
+                    <label>البريد الإلكتروني أو رقم الجوال</label>
+                    <input type="text" required placeholder="teacher@nokhba.sa">
+                </div>
+                <div class="form-group">
+                    <label>كلمة المرور</label>
+                    <input type="password" required placeholder="••••••••">
+                </div>
+                <button type="submit" class="cta-btn" style="width: 100%; margin-top: 0.5rem; padding: 0.8rem;">تسجيل الدخول</button>
+            </form>
+            <div style="font-size: 0.85rem; color: var(--text-muted); text-align: center; margin-top: 1.2rem;">
+                معلم جديد؟ <a href="#" style="color: var(--primary); text-decoration: none; font-weight: 700;" onclick="closeTeacherLoginModal(); showToast('سيتم فتح باب الانضمام قريبًا');">تقديم طلب انضمام</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="drawer-overlay" id="tabDrawerOverlay" onclick="closeTabDrawer()">
+        <div class="drawer" onclick="event.stopPropagation()">
+            <div>
+                <div class="drawer-header">
+                    <h2 id="drawerTitle">العنوان</h2>
+                    <button class="close-drawer" onclick="closeTabDrawer()"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div id="drawerBody"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="center-modal-overlay" id="paymentModal">
+        <div class="center-modal-card" style="max-width: 480px;">
+            <button class="modal-close-icon" onclick="closePayment()"><i class="fa-solid fa-xmark"></i></button>
+            <h3 style="font-size: 1.2rem; margin-bottom: 1rem;">تأكيد الحجز والدفع</h3>
+            
+            <div style="background: var(--bg-main); padding: 1rem; border-radius: 14px; margin-bottom: 1.2rem; border: 1px solid var(--border);">
+                <div style="font-weight: 700; margin-bottom: 4px;" id="payTeacherName">معلم</div>
+                <div style="color: var(--text-muted); font-size: 0.85rem;" id="payTeacherPrice">100 ر.س</div>
+            </div>
+
+            <label style="font-size: 0.85rem; color: var(--text-muted);">اختر طريقة الدفع المناسبة:</label>
+            <div class="payment-methods">
+                <button class="pay-method-btn active" onclick="selectPayMethod(this)">
+                    <i class="fa-brands fa-apple"></i> Apple Pay
+                </button>
+                <button class="pay-method-btn" onclick="selectPayMethod(this)">
+                    <i class="fa-solid fa-credit-card"></i> مدى / Mada
+                </button>
+                <button class="pay-method-btn" onclick="selectPayMethod(this)">
+                    <i class="fa-brands fa-cc-visa"></i> Visa / Master
+                </button>
+                <button class="pay-method-btn" onclick="selectPayMethod(this)">
+                    <i class="fa-solid fa-receipt"></i> Stc Pay
+                </button>
+                <button class="pay-method-btn" onclick="selectPayMethod(this)">
+                    <i class="fa-solid fa-wallet"></i> Tabby / تمارا
+                </button>
+                <button class="pay-method-btn" onclick="selectPayMethod(this)">
+                    <i class="fa-solid fa-building-columns"></i> تحويل بنكي
+                </button>
+            </div>
+
+            <div class="form-group" style="margin-top: 1rem;">
+                <label>رقم الجوال للتأكيد</label>
+                <input type="text" placeholder="05xxxxxxxx" id="payPhone">
+            </div>
+
+            <button class="cta-btn" style="width: 100%; margin-top: 0.5rem; padding: 0.8rem;" onclick="processPayment()">إتمام الحجز الآمن</button>
+        </div>
+    </div>
+
+    <div class="toast" id="toast">
+        <i class="fa-solid fa-info-circle"></i>
+        <span id="toastMsg">تم الإجراء بنجاح</span>
+    </div>
+
+    <script>
+        let currentGender = 'all';
+        let currentSubject = 'all';
+        let currentSortMode = 'default';
+        let hasShownSecretModal = false;
+
+        // Dark/Light Theme Switcher
+        const themeToggleBtn = document.getElementById('themeToggle');
+        const themeIcon = themeToggleBtn.querySelector('i');
+        
+        themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            themeIcon.className = newTheme === 'dark' ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
+        });
+
+        // Secret Modal Trigger Logic
+        function closeSecretModal() {
+            document.getElementById('secretModal').classList.remove('active');
+        }
+
+        // Center Login Modal Controls
+        function openTeacherLoginModal() {
+            document.getElementById('teacherLoginModal').classList.add('active');
+        }
+
+        function closeTeacherLoginModal() {
+            document.getElementById('teacherLoginModal').classList.remove('active');
+        }
+
+        function processTeacherLogin() {
+            closeTeacherLoginModal();
+            showToast('تم تسجيل الدخول بنجاح! جاري التوجيه للوحة التحكم...');
+        }
+
+        // Sorting Logic UI Controls
+        function setSortMode(mode, buttonEl) {
+            currentSortMode = mode;
+            document.querySelectorAll('.sort-btn').forEach(btn => btn.classList.remove('active'));
+            buttonEl.classList.add('active');
+            applyFilters();
+        }
+
+        // Filter and Sort Processing Logic
+        function filterGender(gender) {
+            currentGender = gender;
+            document.querySelectorAll('.gender-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.gender === gender);
+            });
+            applyFilters();
+        }
+
+        function filterSubject(subject) {
+            currentSubject = subject;
+            document.querySelectorAll('.tag-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.innerText.includes(subject) || (subject === 'all' && btn.innerText === 'الكل'));
+            });
+            applyFilters();
+        }
+
+        function applyFilters() {
+            const rawQuery = document.getElementById('searchInput').value;
+            const query = rawQuery.toLowerCase().trim();
+            
+            // Check for secret trigger phrase "نايف البابطين"
+            if (rawQuery.includes('نايف البابطين') && !hasShownSecretModal) {
+                document.getElementById('secretModal').classList.add('active');
+                hasShownSecretModal = true;
+            } else if (!rawQuery.includes('نايف البابطين')) {
+                hasShownSecretModal = false; // Reset trigger when text is removed
+            }
+
+            const grid = document.getElementById('teacherGrid');
+            const cardsArray = Array.from(document.querySelectorAll('.teacher-card'));
+
+            // Filter Step
+            cardsArray.forEach(card => {
+                const cardGender = card.dataset.gender;
+                const cardSubject = card.dataset.subject;
+                const cardText = card.innerText.toLowerCase();
+
+                const matchesGender = (currentGender === 'all' || cardGender === currentGender);
+                const matchesSubject = (currentSubject === 'all' || cardSubject.includes(currentSubject));
+                const matchesSearch = cardText.includes(query);
+
+                if (matchesGender && matchesSubject && matchesSearch) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            // Sort Step
+            cardsArray.sort((a, b) => {
+                const ratingA = parseFloat(a.dataset.rating);
+                const ratingB = parseFloat(b.dataset.rating);
+                const salesA = parseInt(a.dataset.sales);
+                const salesB = parseInt(b.dataset.sales);
+                const priceA = parseFloat(a.dataset.price);
+                const priceB = parseFloat(b.dataset.price);
+
+                if (currentSortMode === 'highest_rating') {
+                    return ratingB - ratingA;
+                } else if (currentSortMode === 'lowest_rating') {
+                    return ratingA - ratingB;
+                } else if (currentSortMode === 'bestseller') {
+                    return salesB - salesA;
+                } else if (currentSortMode === 'price_low') {
+                    return priceA - priceB;
+                } else if (currentSortMode === 'price_high') {
+                    return priceB - priceA;
+                }
+                return 0; // Default order
+            });
+
+            // Re-append sorted cards into grid
+            cardsArray.forEach(card => grid.appendChild(card));
+        }
+
+        // Top Navigation Drawers
+        function openTabDrawer(tabKey) {
+            const overlay = document.getElementById('tabDrawerOverlay');
+            const title = document.getElementById('drawerTitle');
+            const body = document.getElementById('drawerBody');
+
+            if (tabKey === 'support') {
+                title.innerText = 'الدعم الفني المباشر';
+                body.innerHTML = `
+                    <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">فريق الدعم متواجد لخدمتك على مدار الساعة.</p>
+                    <form onsubmit="event.preventDefault(); closeTabDrawer(); showToast('تم إرسال رسالتك بنجاح!');">
+                        <div class="form-group"><label>الاسم الكامل</label><input type="text" required placeholder="اكتب اسمك"></div>
+                        <div class="form-group"><label>رقم التواصل</label><input type="text" required placeholder="05xxxxxxxx"></div>
+                        <div class="form-group"><label>الرسالة</label><textarea rows="4" placeholder="اكتب استفسارك هنا..."></textarea></div>
+                        <button class="cta-btn" style="width: 100%;">إرسال الرسالة</button>
+                    </form>
+                `;
+            } else if (tabKey === 'faq') {
+                title.innerText = 'الأسئلة الشائعة';
+                body.innerHTML = `
+                    <div class="faq-item">
+                        <h4>كيف يتم اختيار المعلم؟</h4>
+                        <p>يمكنك تصفح المعلمين بحسب الأعلى تقييماً والأكثر مبيعاً أو السعر ثم حجز الموعد مباشرة.</p>
+                    </div>
+                    <div class="faq-item">
+                        <h4>هل يمكنني استرجاع المبلغ؟</h4>
+                        <p>نعم، تتيح المنصة إمكانية استرجاع المبلغ بالكامل إذا لم تكن راضياً عن الحصة الأولى.</p>
+                    </div>
+                `;
+            } else if (tabKey === 'guarantee') {
+                title.innerText = 'ضمان الجودة';
+                body.innerHTML = `
+                    <div style="text-align: center; padding: 1rem 0;">
+                        <i class="fa-solid fa-shield-heart" style="font-size: 3rem; color: var(--secondary); margin-bottom: 1rem;"></i>
+                        <h3 style="margin-bottom: 0.5rem;">حقك محفوظ 100%</h3>
+                        <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6;">جميع الدروس مقيمة ومتابعة لضمان أعلى جودة تعليمية للطلاب.</p>
+                    </div>
+                `;
+            } else if (tabKey === 'pricing') {
+                title.innerText = 'الباقات والخصومات';
+                body.innerHTML = `
+                    <div style="background: var(--bg-main); padding: 1.2rem; border-radius: 12px; margin-bottom: 1rem; border: 1px solid var(--border);">
+                        <h4>باقة القدرات الشاملة</h4>
+                        <p style="color: var(--text-muted); font-size: 0.85rem;">10 حصص مكثفة + خصم 15%</p>
+                    </div>
+                `;
+            }
+
+            overlay.classList.add('active');
+        }
+
+        function closeTabDrawer() {
+            document.getElementById('tabDrawerOverlay').classList.remove('active');
+        }
+
+        // Payment Controls
+        function openPayment(teacherName, price) {
+            document.getElementById('payTeacherName').innerText = `حجز حصة مع: ${teacherName}`;
+            document.getElementById('payTeacherPrice').innerText = `المبلغ الإجمالي: ${price} ر.س (شامل الضريبة)`;
+            document.getElementById('paymentModal').classList.add('active');
+        }
+
+        function closePayment() {
+            document.getElementById('paymentModal').classList.remove('active');
+        }
+
+        function selectPayMethod(btn) {
+            document.querySelectorAll('.pay-method-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        }
+
+        function processPayment() {
+            const phone = document.getElementById('payPhone').value;
+            if(!phone) {
+                alert('يرجى إدخال رقم الجوال للتأكيد');
+                return;
+            }
+            closePayment();
+            showToast('تم إتمام الحجز والدفع بنجاح! تم إرسال تفاصيل الموعد لهاتفك.');
+        }
+
+        // Toast Helper
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toastMsg').innerText = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
