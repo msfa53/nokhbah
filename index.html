@@ -4,6 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>نُخبة | منصة استئجار المعلمين الخصوصيين</title>
+    <meta name="description" content="نُخبة - منصة استئجار المعلمين الخصوصيين المعتمدة لمواد القدرات والتحصيلي وجميع المراحل الدراسية. اختر معلمك حسب الجنس والجنسية والتخصص واحجز حصتك مباشرة.">
+    <meta name="theme-color" content="#0b0f19">
+    <meta property="og:title" content="نُخبة | منصة استئجار المعلمين الخصوصيين">
+    <meta property="og:description" content="اختر معلّمك المفضل حسب الجنس والجنسية والتخصص واحجز دروسك الخصوصية مباشرة.">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ar_SA">
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%2338bdf8'/%3E%3Cstop offset='1' stop-color='%2310b981'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='22' fill='url(%23g)'/%3E%3Ctext x='50' y='68' font-size='52' text-anchor='middle' fill='white' font-family='Arial'%3E%D9%86%3C/text%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
     <style>
@@ -47,6 +57,16 @@
             transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
         }
 
+        /* Guarantee Font Awesome glyphs render even though the rule above
+           sets font-family on every element (icons need their own font) */
+        .fa-solid, .fa-regular, .fa-brands,
+        .fas, .far, .fab, .fa {
+            font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands" !important;
+        }
+        .fa-brands, .fab {
+            font-family: "Font Awesome 6 Brands" !important;
+        }
+
         body {
             background-color: var(--bg-main);
             color: var(--text-main);
@@ -74,6 +94,8 @@
             display: flex;
             gap: 1.2rem;
             list-style: none;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
         .top-links button {
@@ -304,13 +326,19 @@
         /* Sorting Bar UI */
         .sort-wrapper {
             max-width: 1280px;
-            margin: 2rem auto 0;
-            padding: 0 2rem;
+            margin: 1.5rem auto 0;
+            padding: 0.85rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
             gap: 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 900;
+            background: var(--bg-glass);
+            backdrop-filter: blur(6px);
+            border-bottom: 1px solid var(--border);
         }
 
         .sort-title {
@@ -320,6 +348,7 @@
             align-items: center;
             gap: 8px;
             font-weight: 600;
+            white-space: nowrap;
         }
 
         .sort-pills {
@@ -331,13 +360,21 @@
             border: 1px solid var(--card-border);
             box-shadow: var(--shadow);
             overflow-x: auto;
+            scroll-snap-type: x proximity;
+            -webkit-overflow-scrolling: touch;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .sort-pills::-webkit-scrollbar {
+            height: 4px;
         }
 
         .sort-btn {
             background: transparent;
             border: none;
             color: var(--text-muted);
-            padding: 8px 14px;
+            padding: 9px 14px;
             border-radius: 10px;
             cursor: pointer;
             font-size: 0.85rem;
@@ -346,6 +383,7 @@
             align-items: center;
             gap: 6px;
             white-space: nowrap;
+            scroll-snap-align: start;
         }
 
         .sort-btn:hover {
@@ -353,10 +391,47 @@
         }
 
         .sort-btn.active {
-            background: var(--bg-main);
-            color: var(--primary);
-            border: 1px solid var(--border);
-            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            background: var(--primary);
+            color: #fff;
+            box-shadow: 0 2px 8px rgba(56, 189, 248, 0.35);
+        }
+
+        .sort-select {
+            display: none;
+            width: 100%;
+            background: var(--bg-card);
+            border: 1px solid var(--card-border);
+            color: var(--text-main);
+            padding: 0.7rem 1rem;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            box-shadow: var(--shadow);
+            outline: none;
+        }
+
+        .results-count {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            white-space: nowrap;
+            font-weight: 600;
+        }
+
+        .no-results {
+            grid-column: 1 / -1;
+            text-align: center;
+            color: var(--text-muted);
+            padding: 3rem 1rem;
+            font-size: 0.95rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .no-results i {
+            font-size: 2rem;
+            opacity: 0.6;
         }
 
         /* Teacher Cards Grid */
@@ -664,6 +739,37 @@
             cursor: pointer;
         }
 
+        .drawer-tabs {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 1.2rem;
+            margin-bottom: 1.2rem;
+            border-bottom: 1px solid var(--border);
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .drawer-tab-btn {
+            background: var(--bg-main);
+            border: 1px solid var(--border);
+            color: var(--text-muted);
+            padding: 8px 14px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.82rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            white-space: nowrap;
+        }
+
+        .drawer-tab-btn.active {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+        }
+
         .form-group {
             margin-bottom: 1.2rem;
             text-align: right;
@@ -763,10 +869,68 @@
         }
 
         @media (max-width: 768px) {
-            .hero h1 { font-size: 2rem; }
+            .hero { padding: 2.5rem 1.25rem 1.25rem; }
+            .hero h1 { font-size: 1.9rem; }
+            .hero p { font-size: 1rem; }
+            .top-bar { padding: 0.5rem 1.25rem; }
             .top-bar-container { flex-direction: column; gap: 8px; }
-            .sort-wrapper { flex-direction: column; align-items: flex-start; }
+            .navbar { padding: 0.85rem 1.25rem; }
+            .sort-wrapper { flex-direction: column; align-items: stretch; padding: 0.85rem 1.25rem; }
+            .sort-pills { display: none; }
+            .sort-select { display: block; }
+            .results-count { text-align: center; }
+            .container { padding: 0 1.25rem; }
             .payment-methods { grid-template-columns: repeat(2, 1fr); }
+            .grid { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 1.6rem; }
+            .badge { font-size: 0.75rem; padding: 5px 12px; }
+            .search-container { padding: 1rem; }
+            .gender-toggle-group { flex-wrap: wrap; }
+            .gender-btn { padding: 8px 16px; font-size: 0.85rem; }
+            .grid { grid-template-columns: 1fr; }
+            .top-links { gap: 0.6rem; }
+            .top-links button { font-size: 0.78rem; }
+            .logo { font-size: 1.4rem; }
+            .logo-icon { width: 34px; height: 34px; }
+            .nav-actions { gap: 0.6rem; }
+            .cta-btn { padding: 0.55rem 1rem; font-size: 0.85rem; }
+            .drawer { padding: 1.5rem 1.25rem; }
+            .drawer-tabs { gap: 6px; }
+        }
+
+        /* Accessibility helpers */
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        a:focus-visible,
+        button:focus-visible,
+        input:focus-visible,
+        textarea:focus-visible {
+            outline: 2px solid var(--primary);
+            outline-offset: 2px;
+        }
+
+        body.no-scroll {
+            overflow: hidden;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.001ms !important;
+                transition-duration: 0.001ms !important;
+            }
         }
     </style>
 </head>
@@ -775,10 +939,10 @@
     <div class="top-bar">
         <div class="top-bar-container">
             <ul class="top-links">
-                <li><button onclick="openTabDrawer('support')"><i class="fa-solid fa-headset"></i> الدعم الفني المباشر</button></li>
-                <li><button onclick="openTabDrawer('faq')"><i class="fa-solid fa-circle-question"></i> الأسئلة الشائعة</button></li>
-                <li><button onclick="openTabDrawer('guarantee')"><i class="fa-solid fa-shield-halved"></i> ضمان الجودة والاسترجاع</button></li>
-                <li><button onclick="openTabDrawer('pricing')"><i class="fa-solid fa-tags"></i> الباقات والخصومات</button></li>
+                <li><button type="button" onclick="openTabDrawer('support')"><i class="fa-solid fa-headset" aria-hidden="true"></i> الدعم الفني المباشر</button></li>
+                <li><button type="button" onclick="openTabDrawer('faq')"><i class="fa-solid fa-circle-question" aria-hidden="true"></i> الأسئلة الشائعة</button></li>
+                <li><button type="button" onclick="openTabDrawer('guarantee')"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i> ضمان الجودة والاسترجاع</button></li>
+                <li><button type="button" onclick="openTabDrawer('pricing')"><i class="fa-solid fa-tags" aria-hidden="true"></i> الباقات والخصومات</button></li>
             </ul>
             <div style="color: var(--text-muted); font-size: 0.8rem; display: flex; gap: 15px; align-items: center;">
                 <span><i class="fa-solid fa-phone"></i> 8001234567</span>
@@ -794,10 +958,10 @@
                 نُخبة
             </a>
             <div class="nav-actions">
-                <button class="theme-toggle" id="themeToggle" title="تبديل المظهر">
-                    <i class="fa-solid fa-moon"></i>
+                <button type="button" class="theme-toggle" id="themeToggle" title="تبديل المظهر" aria-label="تبديل المظهر بين الوضع الداكن والفاتح">
+                    <i class="fa-solid fa-moon" aria-hidden="true"></i>
                 </button>
-                <button class="cta-btn" onclick="openTeacherLoginModal()">دخول المعلمين</button>
+                <button type="button" class="cta-btn" onclick="openTeacherLoginModal()">دخول المعلمين</button>
             </div>
         </nav>
     </header>
@@ -809,64 +973,82 @@
 
         <div class="search-container">
             <div class="gender-toggle-group">
-                <button class="gender-btn active" data-gender="all" onclick="filterGender('all')">
-                    <i class="fa-solid fa-users"></i> الجميع
+                <button type="button" class="gender-btn active" data-gender="all" onclick="filterGender('all')">
+                    <i class="fa-solid fa-users" aria-hidden="true"></i> الجميع
                 </button>
-                <button class="gender-btn" data-gender="female" onclick="filterGender('female')">
-                    <i class="fa-solid fa-user-nurse"></i> قسم المعلمات (بنات)
+                <button type="button" class="gender-btn" data-gender="female" onclick="filterGender('female')">
+                    <i class="fa-solid fa-user-nurse" aria-hidden="true"></i> قسم المعلمات (بنات)
                 </button>
-                <button class="gender-btn" data-gender="male" onclick="filterGender('male')">
-                    <i class="fa-solid fa-user-tie"></i> قسم المعلمين (بنين)
+                <button type="button" class="gender-btn" data-gender="male" onclick="filterGender('male')">
+                    <i class="fa-solid fa-user-tie" aria-hidden="true"></i> قسم المعلمين (بنين)
                 </button>
             </div>
 
             <div class="subject-tags">
-                <button class="tag-btn active" onclick="filterSubject('all')">الكل</button>
-                <button class="tag-btn" onclick="filterSubject('قدرات')">قدرات عامة</button>
-                <button class="tag-btn" onclick="filterSubject('تحصيلي')">تحصيلي علمي</button>
-                <button class="tag-btn" onclick="filterSubject('step')">STEP</button>
-                <button class="tag-btn" onclick="filterSubject('رياضيات')">رياضيات</button>
-                <button class="tag-btn" onclick="filterSubject('فيزياء')">فيزياء</button>
-                <button class="tag-btn" onclick="filterSubject('كيمياء')">كيمياء</button>
-                <button class="tag-btn" onclick="filterSubject('أحياء')">أحياء</button>
-                <button class="tag-btn" onclick="filterSubject('إنجليزية')">لغة إنجليزية</button>
-                <button class="tag-btn" onclick="filterSubject('برمجة')">برمجة</button>
+                <button type="button" class="tag-btn active" onclick="filterSubject('all')">الكل</button>
+                <button type="button" class="tag-btn" onclick="filterSubject('قدرات')">قدرات عامة</button>
+                <button type="button" class="tag-btn" onclick="filterSubject('تحصيلي')">تحصيلي علمي</button>
+                <button type="button" class="tag-btn" onclick="filterSubject('step')">STEP</button>
+                <button type="button" class="tag-btn" onclick="filterSubject('رياضيات')">رياضيات</button>
+                <button type="button" class="tag-btn" onclick="filterSubject('فيزياء')">فيزياء</button>
+                <button type="button" class="tag-btn" onclick="filterSubject('كيمياء')">كيمياء</button>
+                <button type="button" class="tag-btn" onclick="filterSubject('أحياء')">أحياء</button>
+                <button type="button" class="tag-btn" onclick="filterSubject('إنجليزية')">لغة إنجليزية</button>
+                <button type="button" class="tag-btn" onclick="filterSubject('برمجة')">برمجة</button>
             </div>
 
             <div class="search-bar">
-                <input type="text" id="searchInput" class="search-input" placeholder="ابحث باسم المعلم، الجنسية، أو المادة الدراسية..." onkeyup="applyFilters()">
+                <label for="searchInput" class="visually-hidden">ابحث باسم المعلم، الجنسية، أو المادة الدراسية</label>
+                <input type="text" id="searchInput" name="search" class="search-input" placeholder="ابحث باسم المعلم، الجنسية، أو المادة الدراسية..." autocomplete="off" onkeyup="applyFilters()">
             </div>
         </div>
     </section>
 
     <div class="sort-wrapper">
         <div class="sort-title">
-            <i class="fa-solid fa-arrow-down-short-wide"></i> ترتيب المعلمين حسب:
+            <i class="fa-solid fa-arrow-down-short-wide" aria-hidden="true"></i> ترتيب المعلمين حسب:
         </div>
-        <div class="sort-pills">
-            <button class="sort-btn active" onclick="setSortMode('default', this)">
-                <i class="fa-solid fa-sliders"></i> الافتراضي
+
+        <div class="sort-pills" role="radiogroup" aria-label="ترتيب المعلمين">
+            <button type="button" class="sort-btn active" data-sort="default" onclick="setSortMode('default', this)" role="radio" aria-checked="true">
+                <i class="fa-solid fa-sliders" aria-hidden="true"></i> الافتراضي
             </button>
-            <button class="sort-btn" onclick="setSortMode('highest_rating', this)">
-                <i class="fa-solid fa-star"></i> الأعلى تقييماً
+            <button type="button" class="sort-btn" data-sort="highest_rating" onclick="setSortMode('highest_rating', this)" role="radio" aria-checked="false">
+                <i class="fa-solid fa-star" aria-hidden="true"></i> الأعلى تقييماً
             </button>
-            <button class="sort-btn" onclick="setSortMode('lowest_rating', this)">
-                <i class="fa-regular fa-star"></i> الأقل تقييماً
+            <button type="button" class="sort-btn" data-sort="lowest_rating" onclick="setSortMode('lowest_rating', this)" role="radio" aria-checked="false">
+                <i class="fa-regular fa-star" aria-hidden="true"></i> الأقل تقييماً
             </button>
-            <button class="sort-btn" onclick="setSortMode('bestseller', this)">
-                <i class="fa-solid fa-fire"></i> الأكثر طلباً (الأكثر مبيعاً)
+            <button type="button" class="sort-btn" data-sort="bestseller" onclick="setSortMode('bestseller', this)" role="radio" aria-checked="false">
+                <i class="fa-solid fa-fire" aria-hidden="true"></i> الأكثر طلباً
             </button>
-            <button class="sort-btn" onclick="setSortMode('price_low', this)">
-                <i class="fa-solid fa-arrow-down-1-9"></i> الأقل سعراً
+            <button type="button" class="sort-btn" data-sort="price_low" onclick="setSortMode('price_low', this)" role="radio" aria-checked="false">
+                <i class="fa-solid fa-arrow-down-1-9" aria-hidden="true"></i> الأقل سعراً
             </button>
-            <button class="sort-btn" onclick="setSortMode('price_high', this)">
-                <i class="fa-solid fa-arrow-up-9-1"></i> الأعلى سعراً
+            <button type="button" class="sort-btn" data-sort="price_high" onclick="setSortMode('price_high', this)" role="radio" aria-checked="false">
+                <i class="fa-solid fa-arrow-up-9-1" aria-hidden="true"></i> الأعلى سعراً
             </button>
         </div>
+
+        <label for="sortSelect" class="visually-hidden">ترتيب المعلمين حسب</label>
+        <select class="sort-select" id="sortSelect" onchange="setSortModeFromSelect(this.value)">
+            <option value="default">⚙️ الترتيب الافتراضي</option>
+            <option value="highest_rating">⭐ الأعلى تقييماً</option>
+            <option value="lowest_rating">☆ الأقل تقييماً</option>
+            <option value="bestseller">🔥 الأكثر طلباً</option>
+            <option value="price_low">⬇️ الأقل سعراً</option>
+            <option value="price_high">⬆️ الأعلى سعراً</option>
+        </select>
+
+        <div class="results-count" id="resultsCount" aria-live="polite">إظهار 25 من 25 معلم</div>
     </div>
 
     <main class="container">
         <div class="grid" id="teacherGrid">
+            <p class="no-results" id="noResults" hidden>
+                <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+                لا يوجد معلمون مطابقون لبحثك. جرّب تعديل الفلاتر أو كلمة البحث.
+            </p>
             
             <div class="teacher-card" data-gender="female" data-subject="قدرات تحصيلي رياضيات" data-rating="4.9" data-sales="210" data-price="130" data-bestseller="true">
                 <div class="bestseller-badge"><i class="fa-solid fa-fire"></i> الأكثر مبيعاً</div>
@@ -886,7 +1068,7 @@
                 </div>
                 <div class="card-footer">
                     <div class="price-tag">130 ر.س <span>/ساعة</span></div>
-                    <button class="book-btn" onclick="openPayment('أ. سارة القحطاني', 130)">حجز وتأكيد</button>
+                    <button type="button" class="book-btn" onclick="openPayment('أ. سارة القحطاني', 130)">حجز وتأكيد</button>
                 </div>
             </div>
 
@@ -904,11 +1086,11 @@
                         <div class="rating"><i class="fa-solid fa-star"></i> 5.0 (340 حصة)</div>
                     </div>
                     <span class="spec-badge">اختبار STEP & إنجليزي</span>
-                    <div class="card-body">متخصص في إعداد الطلاب لااختبار كفايات اللغة الإنجليزية STEP وقواعد اللغة.</div>
+                    <div class="card-body">متخصص في إعداد الطلاب لاجتياز اختبار كفايات اللغة الإنجليزية STEP وقواعد اللغة.</div>
                 </div>
                 <div class="card-footer">
                     <div class="price-tag">150 ر.س <span>/ساعة</span></div>
-                    <button class="book-btn" onclick="openPayment('د. خالد الشمري', 150)">حجز وتأكيد</button>
+                    <button type="button" class="book-btn" onclick="openPayment('د. خالد الشمري', 150)">حجز وتأكيد</button>
                 </div>
             </div>
 
@@ -929,7 +1111,7 @@
                 </div>
                 <div class="card-footer">
                     <div class="price-tag">110 ر.س <span>/ساعة</span></div>
-                    <button class="book-btn" onclick="openPayment('أ. مريم المصري', 110)">حجز وتأكيد</button>
+                    <button type="button" class="book-btn" onclick="openPayment('أ. مريم المصري', 110)">حجز وتأكيد</button>
                 </div>
             </div>
 
@@ -950,7 +1132,7 @@
                 </div>
                 <div class="card-footer">
                     <div class="price-tag">125 ر.س <span>/ساعة</span></div>
-                    <button class="book-btn" onclick="openPayment('أ. طارق النابلسي', 125)">حجز وتأكيد</button>
+                    <button type="button" class="book-btn" onclick="openPayment('أ. طارق النابلسي', 125)">حجز وتأكيد</button>
                 </div>
             </div>
 
@@ -971,7 +1153,7 @@
                 </div>
                 <div class="card-footer">
                     <div class="price-tag">120 ر.س <span>/ساعة</span></div>
-                    <button class="book-btn" onclick="openPayment('أ. نورة الغامدي', 120)">حجز وتأكيد</button>
+                    <button type="button" class="book-btn" onclick="openPayment('أ. نورة الغامدي', 120)">حجز وتأكيد</button>
                 </div>
             </div>
 
@@ -993,102 +1175,518 @@
                 </div>
                 <div class="card-footer">
                     <div class="price-tag">160 ر.س <span>/ساعة</span></div>
-                    <button class="book-btn" onclick="openPayment('م. أحمد سليمان', 160)">حجز وتأكيد</button>
+                    <button type="button" class="book-btn" onclick="openPayment('م. أحمد سليمان', 160)">حجز وتأكيد</button>
+                </div>
+            </div>
+
+            <div class="teacher-card" data-gender="male" data-subject="برمجة" data-rating="4.5" data-sales="76" data-price="140" data-bestseller="false">
+                <div>
+                    <div class="card-header">
+                        <div class="teacher-details">
+                            <h3>م. ياسر عبدالله</h3>
+                            <div class="meta-badges">
+                                <span class="gender-tag male">معلم</span>
+                                <span class="nat-tag"><i class="fa-solid fa-location-dot"></i> سعودي</span>
+                            </div>
+                        </div>
+                        <div class="rating"><i class="fa-solid fa-star"></i> 4.5 (76 حصة)</div>
+                    </div>
+                    <span class="spec-badge">تطوير الويب & جافا</span>
+                    <div class="card-body">تدريس أساسيات البرمجة وتطوير المواقع للمبتدئين والمتوسطين خطوة بخطوة.</div>
+                </div>
+                <div class="card-footer">
+                    <div class="price-tag">140 ر.س <span>/ساعة</span></div>
+                    <button type="button" class="book-btn" onclick="openPayment('م. ياسر عبدالله', 140)">حجز وتأكيد</button>
+                </div>
+            </div>
+
+            <div class="teacher-card" data-gender="female" data-subject="قدرات إنجليزية" data-rating="4.8" data-sales="190" data-price="135" data-bestseller="false">
+                <div>
+                    <div class="card-header">
+                        <div class="teacher-details">
+                            <h3>أ. ريم الدوسري</h3>
+                            <div class="meta-badges">
+                                <span class="gender-tag female">معلمة</span>
+                                <span class="nat-tag"><i class="fa-solid fa-location-dot"></i> سعودية</span>
+                            </div>
+                        </div>
+                        <div class="rating"><i class="fa-solid fa-star"></i> 4.8 (190 حصة)</div>
+                    </div>
+                    <span class="spec-badge">قدرات لفظي & إنجليزي</span>
+                    <div class="card-body">دمج مهارات اللغة الإنجليزية مع تدريب القدرات اللفظي لتحقيق أعلى الدرجات.</div>
+                </div>
+                <div class="card-footer">
+                    <div class="price-tag">135 ر.س <span>/ساعة</span></div>
+                    <button type="button" class="book-btn" onclick="openPayment('أ. ريم الدوسري', 135)">حجز وتأكيد</button>
+                </div>
+            </div>
+
+            <div class="teacher-card" data-gender="male" data-subject="كيمياء تحصيلي" data-rating="4.6" data-sales="102" data-price="115" data-bestseller="false">
+                <div>
+                    <div class="card-header">
+                        <div class="teacher-details">
+                            <h3>د. عمر حسن</h3>
+                            <div class="meta-badges">
+                                <span class="gender-tag male">معلم</span>
+                                <span class="nat-tag"><i class="fa-solid fa-location-dot"></i> مصري</span>
+                            </div>
+                        </div>
+                        <div class="rating"><i class="fa-solid fa-star"></i> 4.6 (102 حصة)</div>
+                    </div>
+                    <span class="spec-badge">كيمياء عضوية & تحصيلي</span>
+                    <div class="card-body">شرح مبسط للكيمياء العضوية وغير العضوية مع تجميعات التحصيلي المحدثة.</div>
+                </div>
+                <div class="card-footer">
+                    <div class="price-tag">115 ر.س <span>/ساعة</span></div>
+                    <button type="button" class="book-btn" onclick="openPayment('د. عمر حسن', 115)">حجز وتأكيد</button>
+                </div>
+            </div>
+
+            <div class="teacher-card" data-gender="female" data-subject="أحياء تحصيلي" data-rating="4.7" data-sales="88" data-price="105" data-bestseller="false">
+                <div>
+                    <div class="card-header">
+                        <div class="teacher-details">
+                            <h3>أ. لينا خوري</h3>
+                            <div class="meta-badges">
+                                <span class="gender-tag female">معلمة</span>
+                                <span class="nat-tag"><i class="fa-solid fa-location-dot"></i> لبنانية</span>
+                            </div>
+                        </div>
+                        <div class="rating"><i class="fa-solid fa-star"></i> 4.7 (88 حصة)</div>
+                    </div>
+                    <span class="spec-badge">أحياء & علم الوراثة</span>
+                    <div class="card-body">متخصصة في تبسيط مادة الأحياء وعلم الوراثة لطلاب الثانوية والتحصيلي.</div>
+                </div>
+                <div class="card-footer">
+                    <div class="price-tag">105 ر.س <span>/ساعة</span></div>
+                    <button type="button" class="book-btn" onclick="openPayment('أ. لينا خوري', 105)">حجز وتأكيد</button>
+                </div>
+            </div>
+
+            <div class="teacher-card" data-gender="male" data-subject="رياضيات قدرات" data-rating="4.4" data-sales="60" data-price="100" data-bestseller="false">
+                <div>
+                    <div class="card-header">
+                        <div class="teacher-details">
+                            <h3>أ. فهد المطيري</h3>
+                            <div class="meta-badges">
+                                <span class="gender-tag male">معلم</span>
+                                <span class="nat-tag"><i class="fa-solid fa-location-dot"></i> سعودي</span>
+                            </div>
+                        </div>
+                        <div class="rating"><i class="fa-solid fa-star"></i> 4.4 (60 حصة)</div>
+                    </div>
+                    <span class="spec-badge">رياضيات & قدرات كمي</span>
+                    <div class="card-body">تأسيس قوي في الرياضيات مع ربطها بأساليب حل القدرات الكمي.</div>
+                </div>
+                <div class="card-footer">
+                    <div class="price-tag">100 ر.س <span>/ساعة</span></div>
+                    <button type="button" class="book-btn" onclick="openPayment('أ. فهد المطيري', 100)">حجز وتأكيد</button>
+                </div>
+            </div>
+
+            <div class="teacher-card" data-gender="female" data-subject="إنجليزية step" data-rating="4.9" data-sales="230" data-price="145" data-bestseller="true">
+                <div class="bestseller-badge"><i class="fa-solid fa-fire"></i> الأكثر مبيعاً</div>
+                <div>
+                    <div class="card-header">
+                        <div class="teacher-details">
+                            <h3>أ. هند العتيبي</h3>
+                            <div class="meta-badges">
+                                <span class="gender-tag female">معلمة</span>
+                                <span class="nat-tag"><i class="fa-solid fa-location-dot"></i> سعودية</span>
+                            </div>
+                        </div>
+                        <div class="rating"><i class="fa-solid fa-star"></i> 4.9 (230 حصة)</div>
+                    </div>
+                    <span class="spec-badge">STEP & محادثة إنجليزية</span>
+                    <div class="card-body">إعداد مكثف لاختبار STEP مع تطوير مهارات المحادثة والقواعد.</div>
+                </div>
+                <div class="card-footer">
+                    <div class="price-tag">145 ر.س <span>/ساعة</span></div>
+                    <button type="button" class="book-btn" onclick="openPayment('أ. هند العتيبي', 145)">حجز وتأكيد</button>
+                </div>
+            </div>
+
+            <div class="teacher-card" data-gender="male" data-subject="برمجة رياضيات" data-rating="4.3" data-sales="45" data-price="130" data-bestseller="false">
+                <div>
+                    <div class="card-header">
+                        <div class="teacher-details">
+                            <h3>م. كريم الجابر</h3>
+                            <div class="meta-badges">
+                                <span class="gender-tag male">معلم</span>
+                                <span class="nat-tag"><i class="fa-solid fa-location-dot"></i> كويتي</span>
+                            </div>
+                        </div>
+                        <div class="rating"><i class="fa-solid fa-star"></i> 4.3 (45 حصة)</div>
+                    </div>
+                    <span class="spec-badge">برمجة تطبيقات & رياضيات</span>
+                    <div class="card-body">تعليم البرمجة العملية للمشاريع الجامعية مع دعم في الرياضيات التطبيقية.</div>
+                </div>
+                <div class="card-footer">
+                    <div class="price-tag">130 ر.س <span>/ساعة</span></div>
+                    <button type="button" class="book-btn" onclick="openPayment('م. كريم الجابر', 130)">حجز وتأكيد</button>
+                </div>
+            </div>
+
+            <div class="teacher-card" data-gender="female" data-subject="فيزياء تحصيلي" data-rating="4.6" data-sales="130" data-price="120" data-bestseller="false">
+                <div>
+                    <div class="card-header">
+                        <div class="teacher-details">
+                            <h3>أ. دانة السبيعي</h3>
+                            <div class="meta-badges">
+                                <span class="gender-tag female">معلمة</span>
+                                <span class="nat-tag"><i class="fa-solid fa-location-dot"></i> سعودية</span>
+                            </div>
+                        </div>
+                        <div class="rating"><i class="fa-solid fa-star"></i> 4.6 (130 حصة)</div>
+                    </div>
+                    <span class="spec-badge">فيزياء ميكانيكا & تحصيلي</span>
+                    <div class="card-body">تبسيط قوانين الفيزياء وحل نماذج تحصيلي بطريقة سهلة ومركزة.</div>
+                </div>
+                <div class="card-footer">
+                    <div class="price-tag">120 ر.س <span>/ساعة</span></div>
+                    <button type="button" class="book-btn" onclick="openPayment('أ. دانة السبيعي', 120)">حجز وتأكيد</button>
+                </div>
+            </div>
+
+            <div class="teacher-card" data-gender="male" data-subject="كيمياء أحياء" data-rating="4.5" data-sales="70" data-price="110" data-bestseller="false">
+                <div>
+                    <div class="card-header">
+                        <div class="teacher-details">
+                            <h3>أ. زياد حمدان</h3>
+                            <div class="meta-badges">
+                                <span class="gender-tag male">معلم</span>
+                                <span class="nat-tag"><i class="fa-solid fa-location-dot"></i> أردني</span>
+                            </div>
+                        </div>
+                        <div class="rating"><i class="fa-solid fa-star"></i> 4.5 (70 حصة)</div>
+                    </div>
+                    <span class="spec-badge">كيمياء & أحياء عامة</span>
+                    <div class="card-body">شرح شامل لمنهج الكيمياء والأحياء مع أسئلة تدريبية مكثفة.</div>
+                </div>
+                <div class="card-footer">
+                    <div class="price-tag">110 ر.س <span>/ساعة</span></div>
+                    <button type="button" class="book-btn" onclick="openPayment('أ. زياد حمدان', 110)">حجز وتأكيد</button>
+                </div>
+            </div>
+
+            <div class="teacher-card" data-gender="female" data-subject="قدرات كمي" data-rating="4.8" data-sales="175" data-price="125" data-bestseller="false">
+                <div>
+                    <div class="card-header">
+                        <div class="teacher-details">
+                            <h3>أ. جواهر الحربي</h3>
+                            <div class="meta-badges">
+                                <span class="gender-tag female">معلمة</span>
+                                <span class="nat-tag"><i class="fa-solid fa-location-dot"></i> سعودية</span>
+                            </div>
+                        </div>
+                        <div class="rating"><i class="fa-solid fa-star"></i> 4.8 (175 حصة)</div>
+                    </div>
+                    <span class="spec-badge">قدرات كمي متقدم</span>
+                    <div class="card-body">استراتيجيات متقدمة لحل أسئلة القدرات الكمي بأقل وقت ممكن.</div>
+                </div>
+                <div class="card-footer">
+                    <div class="price-tag">125 ر.س <span>/ساعة</span></div>
+                    <button type="button" class="book-btn" onclick="openPayment('أ. جواهر الحربي', 125)">حجز وتأكيد</button>
+                </div>
+            </div>
+
+            <div class="teacher-card" data-gender="male" data-subject="step إنجليزية برمجة" data-rating="4.7" data-sales="150" data-price="155" data-bestseller="false">
+                <div>
+                    <div class="card-header">
+                        <div class="teacher-details">
+                            <h3>م. سامي عوض</h3>
+                            <div class="meta-badges">
+                                <span class="gender-tag male">معلم</span>
+                                <span class="nat-tag"><i class="fa-solid fa-location-dot"></i> مصري</span>
+                            </div>
+                        </div>
+                        <div class="rating"><i class="fa-solid fa-star"></i> 4.7 (150 حصة)</div>
+                    </div>
+                    <span class="spec-badge">STEP & أساسيات البرمجة</span>
+                    <div class="card-body">دمج تعليم اللغة الإنجليزية مع مهارات البرمجة الأساسية للطلاب الجامعيين.</div>
+                </div>
+                <div class="card-footer">
+                    <div class="price-tag">155 ر.س <span>/ساعة</span></div>
+                    <button type="button" class="book-btn" onclick="openPayment('م. سامي عوض', 155)">حجز وتأكيد</button>
+                </div>
+            </div>
+
+            <div class="teacher-card" data-gender="female" data-subject="تحصيلي رياضيات" data-rating="4.5" data-sales="66" data-price="100" data-bestseller="false">
+                <div>
+                    <div class="card-header">
+                        <div class="teacher-details">
+                            <h3>أ. منيرة القرني</h3>
+                            <div class="meta-badges">
+                                <span class="gender-tag female">معلمة</span>
+                                <span class="nat-tag"><i class="fa-solid fa-location-dot"></i> سعودية</span>
+                            </div>
+                        </div>
+                        <div class="rating"><i class="fa-solid fa-star"></i> 4.5 (66 حصة)</div>
+                    </div>
+                    <span class="spec-badge">تحصيلي علمي & رياضيات</span>
+                    <div class="card-body">مراجعات مكثفة لمادة التحصيلي العلمي مع التركيز على الرياضيات.</div>
+                </div>
+                <div class="card-footer">
+                    <div class="price-tag">100 ر.س <span>/ساعة</span></div>
+                    <button type="button" class="book-btn" onclick="openPayment('أ. منيرة القرني', 100)">حجز وتأكيد</button>
+                </div>
+            </div>
+
+            <div class="teacher-card" data-gender="male" data-subject="فيزياء كيمياء تحصيلي" data-rating="4.9" data-sales="260" data-price="170" data-bestseller="true">
+                <div class="bestseller-badge"><i class="fa-solid fa-fire"></i> الأكثر مبيعاً</div>
+                <div>
+                    <div class="card-header">
+                        <div class="teacher-details">
+                            <h3>د. باسل نور</h3>
+                            <div class="meta-badges">
+                                <span class="gender-tag male">معلم</span>
+                                <span class="nat-tag"><i class="fa-solid fa-location-dot"></i> سوري</span>
+                            </div>
+                        </div>
+                        <div class="rating"><i class="fa-solid fa-star"></i> 4.9 (260 حصة)</div>
+                    </div>
+                    <span class="spec-badge">فيزياء & كيمياء متقدم</span>
+                    <div class="card-body">خبرة طويلة في تدريس الفيزياء والكيمياء لطلاب الثانوية والتحصيلي.</div>
+                </div>
+                <div class="card-footer">
+                    <div class="price-tag">170 ر.س <span>/ساعة</span></div>
+                    <button type="button" class="book-btn" onclick="openPayment('د. باسل نور', 170)">حجز وتأكيد</button>
+                </div>
+            </div>
+
+            <div class="teacher-card" data-gender="female" data-subject="أحياء قدرات" data-rating="4.4" data-sales="54" data-price="95" data-bestseller="false">
+                <div>
+                    <div class="card-header">
+                        <div class="teacher-details">
+                            <h3>أ. أمل الزهراني</h3>
+                            <div class="meta-badges">
+                                <span class="gender-tag female">معلمة</span>
+                                <span class="nat-tag"><i class="fa-solid fa-location-dot"></i> سعودية</span>
+                            </div>
+                        </div>
+                        <div class="rating"><i class="fa-solid fa-star"></i> 4.4 (54 حصة)</div>
+                    </div>
+                    <span class="spec-badge">أحياء & استيعاب مقروء</span>
+                    <div class="card-body">ربط مادة الأحياء بمهارات الفهم والاستيعاب المطلوبة في القدرات.</div>
+                </div>
+                <div class="card-footer">
+                    <div class="price-tag">95 ر.س <span>/ساعة</span></div>
+                    <button type="button" class="book-btn" onclick="openPayment('أ. أمل الزهراني', 95)">حجز وتأكيد</button>
+                </div>
+            </div>
+
+            <div class="teacher-card" data-gender="male" data-subject="رياضيات برمجة" data-rating="4.6" data-sales="112" data-price="145" data-bestseller="false">
+                <div>
+                    <div class="card-header">
+                        <div class="teacher-details">
+                            <h3>م. طلال الشهري</h3>
+                            <div class="meta-badges">
+                                <span class="gender-tag male">معلم</span>
+                                <span class="nat-tag"><i class="fa-solid fa-location-dot"></i> سعودي</span>
+                            </div>
+                        </div>
+                        <div class="rating"><i class="fa-solid fa-star"></i> 4.6 (112 حصة)</div>
+                    </div>
+                    <span class="spec-badge">رياضيات & برمجة Python</span>
+                    <div class="card-body">تدريس الرياضيات المتقدمة مع مقدمة عملية في لغة بايثون.</div>
+                </div>
+                <div class="card-footer">
+                    <div class="price-tag">145 ر.س <span>/ساعة</span></div>
+                    <button type="button" class="book-btn" onclick="openPayment('م. طلال الشهري', 145)">حجز وتأكيد</button>
+                </div>
+            </div>
+
+            <div class="teacher-card" data-gender="female" data-subject="إنجليزية قدرات" data-rating="4.7" data-sales="140" data-price="130" data-bestseller="false">
+                <div>
+                    <div class="card-header">
+                        <div class="teacher-details">
+                            <h3>أ. غادة يوسف</h3>
+                            <div class="meta-badges">
+                                <span class="gender-tag female">معلمة</span>
+                                <span class="nat-tag"><i class="fa-solid fa-location-dot"></i> مصرية</span>
+                            </div>
+                        </div>
+                        <div class="rating"><i class="fa-solid fa-star"></i> 4.7 (140 حصة)</div>
+                    </div>
+                    <span class="spec-badge">إنجليزي عام & قدرات لفظي</span>
+                    <div class="card-body">تطوير مهارات اللغة الإنجليزية جنباً إلى جنب مع تدريب القدرات اللفظي.</div>
+                </div>
+                <div class="card-footer">
+                    <div class="price-tag">130 ر.س <span>/ساعة</span></div>
+                    <button type="button" class="book-btn" onclick="openPayment('أ. غادة يوسف', 130)">حجز وتأكيد</button>
+                </div>
+            </div>
+
+            <div class="teacher-card" data-gender="male" data-subject="تحصيلي قدرات كيمياء" data-rating="4.8" data-sales="200" data-price="150" data-bestseller="true">
+                <div class="bestseller-badge"><i class="fa-solid fa-fire"></i> الأكثر مبيعاً</div>
+                <div>
+                    <div class="card-header">
+                        <div class="teacher-details">
+                            <h3>أ. عبدالرحمن آل سعيد</h3>
+                            <div class="meta-badges">
+                                <span class="gender-tag male">معلم</span>
+                                <span class="nat-tag"><i class="fa-solid fa-location-dot"></i> سعودي</span>
+                            </div>
+                        </div>
+                        <div class="rating"><i class="fa-solid fa-star"></i> 4.8 (200 حصة)</div>
+                    </div>
+                    <span class="spec-badge">تحصيلي شامل & كيمياء</span>
+                    <div class="card-body">برنامج شامل يغطي جميع أقسام التحصيلي مع تركيز خاص على الكيمياء.</div>
+                </div>
+                <div class="card-footer">
+                    <div class="price-tag">150 ر.س <span>/ساعة</span></div>
+                    <button type="button" class="book-btn" onclick="openPayment('أ. عبدالرحمن آل سعيد', 150)">حجز وتأكيد</button>
+                </div>
+            </div>
+
+            <div class="teacher-card" data-gender="female" data-subject="كيمياء تحصيلي أحياء" data-rating="4.6" data-sales="98" data-price="118" data-bestseller="false">
+                <div>
+                    <div class="card-header">
+                        <div class="teacher-details">
+                            <h3>أ. سلمى إبراهيم</h3>
+                            <div class="meta-badges">
+                                <span class="gender-tag female">معلمة</span>
+                                <span class="nat-tag"><i class="fa-solid fa-location-dot"></i> سعودية</span>
+                            </div>
+                        </div>
+                        <div class="rating"><i class="fa-solid fa-star"></i> 4.6 (98 حصة)</div>
+                    </div>
+                    <span class="spec-badge">كيمياء حيوية & تحصيلي</span>
+                    <div class="card-body">شرح مترابط للكيمياء الحيوية والأحياء يناسب طلاب التحصيلي العلمي.</div>
+                </div>
+                <div class="card-footer">
+                    <div class="price-tag">118 ر.س <span>/ساعة</span></div>
+                    <button type="button" class="book-btn" onclick="openPayment('أ. سلمى إبراهيم', 118)">حجز وتأكيد</button>
+                </div>
+            </div>
+
+            <div class="teacher-card" data-gender="male" data-subject="برمجة step" data-rating="4.5" data-sales="80" data-price="135" data-bestseller="false">
+                <div>
+                    <div class="card-header">
+                        <div class="teacher-details">
+                            <h3>م. حمزة درويش</h3>
+                            <div class="meta-badges">
+                                <span class="gender-tag male">معلم</span>
+                                <span class="nat-tag"><i class="fa-solid fa-location-dot"></i> فلسطيني</span>
+                            </div>
+                        </div>
+                        <div class="rating"><i class="fa-solid fa-star"></i> 4.5 (80 حصة)</div>
+                    </div>
+                    <span class="spec-badge">برمجة ويب & STEP</span>
+                    <div class="card-body">تعليم أساسيات تطوير الويب مع دعم إضافي للتحضير لاختبار STEP.</div>
+                </div>
+                <div class="card-footer">
+                    <div class="price-tag">135 ر.س <span>/ساعة</span></div>
+                    <button type="button" class="book-btn" onclick="openPayment('م. حمزة درويش', 135)">حجز وتأكيد</button>
                 </div>
             </div>
 
         </div>
     </main>
 
-    <div class="center-modal-overlay" id="secretModal">
+    <div class="center-modal-overlay" id="secretModal" role="dialog" aria-modal="true" aria-labelledby="secretModalTitle" aria-hidden="true">
         <div class="center-modal-card secret-modal-card">
-            <button class="modal-close-icon" onclick="closeSecretModal()"><i class="fa-solid fa-xmark"></i></button>
+            <button type="button" class="modal-close-icon" onclick="closeSecretModal()" aria-label="إغلاق النافذة"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
             <div class="secret-icon">
-                <i class="fa-solid fa-sack-dollar"></i>
+                <i class="fa-solid fa-sack-dollar" aria-hidden="true"></i>
             </div>
-            <h2>رسالة خاصة 🚀</h2>
+            <h2 id="secretModalTitle">رسالة خاصة 🚀</h2>
             <p>We will make it and become rich!</p>
-            <button class="cta-btn" style="width: 100%; padding: 0.8rem;" onclick="closeSecretModal()">أتفق تماماً! 💪</button>
+            <button type="button" class="cta-btn" style="width: 100%; padding: 0.8rem;" onclick="closeSecretModal()">أتفق تماماً! 💪</button>
         </div>
     </div>
 
-    <div class="center-modal-overlay" id="teacherLoginModal">
+    <div class="center-modal-overlay" id="teacherLoginModal" role="dialog" aria-modal="true" aria-labelledby="loginModalTitle" aria-hidden="true">
         <div class="center-modal-card">
-            <button class="modal-close-icon" onclick="closeTeacherLoginModal()"><i class="fa-solid fa-xmark"></i></button>
+            <button type="button" class="modal-close-icon" onclick="closeTeacherLoginModal()" aria-label="إغلاق النافذة"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
             <div style="text-align: center; margin-bottom: 1.5rem;">
                 <div class="logo-icon" style="margin: 0 auto 12px; width: 50px; height: 50px; font-size: 1.3rem;">
-                    <i class="fa-solid fa-chalkboard-user"></i>
+                    <i class="fa-solid fa-chalkboard-user" aria-hidden="true"></i>
                 </div>
-                <h2>بوابة دخول المعلمين</h2>
+                <h2 id="loginModalTitle">بوابة دخول المعلمين</h2>
                 <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 4px;">قم بتسجيل الدخول لمتابعة جدول دروسك وحجوزات الطلاب</p>
             </div>
             <form onsubmit="event.preventDefault(); processTeacherLogin();">
                 <div class="form-group">
-                    <label>البريد الإلكتروني أو رقم الجوال</label>
-                    <input type="text" required placeholder="teacher@nokhba.sa">
+                    <label for="loginId">البريد الإلكتروني أو رقم الجوال</label>
+                    <input type="text" id="loginId" name="loginId" required placeholder="teacher@nokhba.sa" autocomplete="username">
                 </div>
                 <div class="form-group">
-                    <label>كلمة المرور</label>
-                    <input type="password" required placeholder="••••••••">
+                    <label for="loginPassword">كلمة المرور</label>
+                    <input type="password" id="loginPassword" name="password" required placeholder="••••••••" autocomplete="current-password">
                 </div>
                 <button type="submit" class="cta-btn" style="width: 100%; margin-top: 0.5rem; padding: 0.8rem;">تسجيل الدخول</button>
             </form>
             <div style="font-size: 0.85rem; color: var(--text-muted); text-align: center; margin-top: 1.2rem;">
-                معلم جديد؟ <a href="#" style="color: var(--primary); text-decoration: none; font-weight: 700;" onclick="closeTeacherLoginModal(); showToast('سيتم فتح باب الانضمام قريبًا');">تقديم طلب انضمام</a>
+                معلم جديد؟ <a href="#" style="color: var(--primary); text-decoration: none; font-weight: 700;" onclick="event.preventDefault(); closeTeacherLoginModal(); showToast('سيتم فتح باب الانضمام قريبًا');">تقديم طلب انضمام</a>
             </div>
         </div>
     </div>
 
-    <div class="drawer-overlay" id="tabDrawerOverlay" onclick="closeTabDrawer()">
-        <div class="drawer" onclick="event.stopPropagation()">
+    <div class="drawer-overlay" id="tabDrawerOverlay" onclick="closeTabDrawer()" aria-hidden="true">
+        <div class="drawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle" onclick="event.stopPropagation()">
             <div>
                 <div class="drawer-header">
-                    <h2 id="drawerTitle">العنوان</h2>
-                    <button class="close-drawer" onclick="closeTabDrawer()"><i class="fa-solid fa-xmark"></i></button>
+                    <h2 id="drawerTitle">مركز المساعدة</h2>
+                    <button type="button" class="close-drawer" onclick="closeTabDrawer()" aria-label="إغلاق"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+                </div>
+                <div class="drawer-tabs" role="tablist" aria-label="أقسام المساعدة">
+                    <button type="button" class="drawer-tab-btn" data-tab="support" onclick="switchDrawerTab('support')" role="tab" aria-selected="false">
+                        <i class="fa-solid fa-headset" aria-hidden="true"></i> الدعم الفني
+                    </button>
+                    <button type="button" class="drawer-tab-btn" data-tab="faq" onclick="switchDrawerTab('faq')" role="tab" aria-selected="false">
+                        <i class="fa-solid fa-circle-question" aria-hidden="true"></i> الأسئلة الشائعة
+                    </button>
+                    <button type="button" class="drawer-tab-btn" data-tab="guarantee" onclick="switchDrawerTab('guarantee')" role="tab" aria-selected="false">
+                        <i class="fa-solid fa-shield-halved" aria-hidden="true"></i> ضمان الجودة
+                    </button>
+                    <button type="button" class="drawer-tab-btn" data-tab="pricing" onclick="switchDrawerTab('pricing')" role="tab" aria-selected="false">
+                        <i class="fa-solid fa-tags" aria-hidden="true"></i> الباقات
+                    </button>
                 </div>
                 <div id="drawerBody"></div>
             </div>
         </div>
     </div>
 
-    <div class="center-modal-overlay" id="paymentModal">
+    <div class="center-modal-overlay" id="paymentModal" role="dialog" aria-modal="true" aria-labelledby="paymentModalTitle" aria-hidden="true">
         <div class="center-modal-card" style="max-width: 480px;">
-            <button class="modal-close-icon" onclick="closePayment()"><i class="fa-solid fa-xmark"></i></button>
-            <h3 style="font-size: 1.2rem; margin-bottom: 1rem;">تأكيد الحجز والدفع</h3>
+            <button type="button" class="modal-close-icon" onclick="closePayment()" aria-label="إغلاق النافذة"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+            <h3 id="paymentModalTitle" style="font-size: 1.2rem; margin-bottom: 1rem;">تأكيد الحجز والدفع</h3>
             
             <div style="background: var(--bg-main); padding: 1rem; border-radius: 14px; margin-bottom: 1.2rem; border: 1px solid var(--border);">
                 <div style="font-weight: 700; margin-bottom: 4px;" id="payTeacherName">معلم</div>
                 <div style="color: var(--text-muted); font-size: 0.85rem;" id="payTeacherPrice">100 ر.س</div>
             </div>
 
-            <label style="font-size: 0.85rem; color: var(--text-muted);">اختر طريقة الدفع المناسبة:</label>
-            <div class="payment-methods">
-                <button class="pay-method-btn active" onclick="selectPayMethod(this)">
-                    <i class="fa-brands fa-apple"></i> Apple Pay
+            <label id="payMethodLabel" style="font-size: 0.85rem; color: var(--text-muted);">اختر طريقة الدفع المناسبة:</label>
+            <div class="payment-methods" role="group" aria-labelledby="payMethodLabel">
+                <button type="button" class="pay-method-btn active" onclick="selectPayMethod(this)" aria-pressed="true">
+                    <i class="fa-brands fa-apple" aria-hidden="true"></i> Apple Pay
                 </button>
-                <button class="pay-method-btn" onclick="selectPayMethod(this)">
-                    <i class="fa-solid fa-credit-card"></i> مدى / Mada
+                <button type="button" class="pay-method-btn" onclick="selectPayMethod(this)" aria-pressed="false">
+                    <i class="fa-solid fa-credit-card" aria-hidden="true"></i> مدى / Mada
                 </button>
-                <button class="pay-method-btn" onclick="selectPayMethod(this)">
-                    <i class="fa-brands fa-cc-visa"></i> Visa / Master
+                <button type="button" class="pay-method-btn" onclick="selectPayMethod(this)" aria-pressed="false">
+                    <i class="fa-brands fa-cc-visa" aria-hidden="true"></i> Visa / Master
                 </button>
-                <button class="pay-method-btn" onclick="selectPayMethod(this)">
-                    <i class="fa-solid fa-receipt"></i> Stc Pay
+                <button type="button" class="pay-method-btn" onclick="selectPayMethod(this)" aria-pressed="false">
+                    <i class="fa-solid fa-receipt" aria-hidden="true"></i> Stc Pay
                 </button>
-                <button class="pay-method-btn" onclick="selectPayMethod(this)">
-                    <i class="fa-solid fa-wallet"></i> Tabby / تمارا
+                <button type="button" class="pay-method-btn" onclick="selectPayMethod(this)" aria-pressed="false">
+                    <i class="fa-solid fa-wallet" aria-hidden="true"></i> Tabby / تمارا
                 </button>
-                <button class="pay-method-btn" onclick="selectPayMethod(this)">
-                    <i class="fa-solid fa-building-columns"></i> تحويل بنكي
+                <button type="button" class="pay-method-btn" onclick="selectPayMethod(this)" aria-pressed="false">
+                    <i class="fa-solid fa-building-columns" aria-hidden="true"></i> تحويل بنكي
                 </button>
             </div>
 
             <div class="form-group" style="margin-top: 1rem;">
-                <label>رقم الجوال للتأكيد</label>
-                <input type="text" placeholder="05xxxxxxxx" id="payPhone">
+                <label for="payPhone">رقم الجوال للتأكيد</label>
+                <input type="tel" name="phone" placeholder="05xxxxxxxx" id="payPhone" inputmode="tel" pattern="05[0-9]{8}" autocomplete="tel" maxlength="10">
             </div>
 
-            <button class="cta-btn" style="width: 100%; margin-top: 0.5rem; padding: 0.8rem;" onclick="processPayment()">إتمام الحجز الآمن</button>
+            <button type="button" class="cta-btn" style="width: 100%; margin-top: 0.5rem; padding: 0.8rem;" onclick="processPayment()">إتمام الحجز الآمن</button>
         </div>
     </div>
 
@@ -1102,6 +1700,7 @@
         let currentSubject = 'all';
         let currentSortMode = 'default';
         let hasShownSecretModal = false;
+        let lastFocusedEl = null;
 
         // Dark/Light Theme Switcher
         const themeToggleBtn = document.getElementById('themeToggle');
@@ -1115,18 +1714,56 @@
             themeIcon.className = newTheme === 'dark' ? 'fa-solid fa-moon' : 'fa-solid fa-sun';
         });
 
+        // Overlay helpers: lock page scroll and manage focus while any overlay is open
+        function getOpenOverlays() {
+            return document.querySelectorAll('.center-modal-overlay.active, .drawer-overlay.active');
+        }
+
+        function onOverlayOpen(overlayEl) {
+            lastFocusedEl = document.activeElement;
+            document.body.classList.add('no-scroll');
+            overlayEl.setAttribute('aria-hidden', 'false');
+            const focusTarget = overlayEl.querySelector('.modal-close-icon, .close-drawer');
+            if (focusTarget) focusTarget.focus();
+        }
+
+        function onOverlayClose(overlayEl) {
+            overlayEl.setAttribute('aria-hidden', 'true');
+            if (getOpenOverlays().length === 0) {
+                document.body.classList.remove('no-scroll');
+            }
+            if (lastFocusedEl && typeof lastFocusedEl.focus === 'function') {
+                lastFocusedEl.focus();
+            }
+        }
+
+        // Close the top-most open overlay on Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key !== 'Escape') return;
+            if (document.getElementById('paymentModal').classList.contains('active')) { closePayment(); return; }
+            if (document.getElementById('teacherLoginModal').classList.contains('active')) { closeTeacherLoginModal(); return; }
+            if (document.getElementById('secretModal').classList.contains('active')) { closeSecretModal(); return; }
+            if (document.getElementById('tabDrawerOverlay').classList.contains('active')) { closeTabDrawer(); return; }
+        });
+
         // Secret Modal Trigger Logic
         function closeSecretModal() {
-            document.getElementById('secretModal').classList.remove('active');
+            const el = document.getElementById('secretModal');
+            el.classList.remove('active');
+            onOverlayClose(el);
         }
 
         // Center Login Modal Controls
         function openTeacherLoginModal() {
-            document.getElementById('teacherLoginModal').classList.add('active');
+            const el = document.getElementById('teacherLoginModal');
+            el.classList.add('active');
+            onOverlayOpen(el);
         }
 
         function closeTeacherLoginModal() {
-            document.getElementById('teacherLoginModal').classList.remove('active');
+            const el = document.getElementById('teacherLoginModal');
+            el.classList.remove('active');
+            onOverlayClose(el);
         }
 
         function processTeacherLogin() {
@@ -1137,8 +1774,24 @@
         // Sorting Logic UI Controls
         function setSortMode(mode, buttonEl) {
             currentSortMode = mode;
-            document.querySelectorAll('.sort-btn').forEach(btn => btn.classList.remove('active'));
-            buttonEl.classList.add('active');
+            document.querySelectorAll('.sort-btn').forEach(btn => {
+                const isActive = btn === buttonEl;
+                btn.classList.toggle('active', isActive);
+                btn.setAttribute('aria-checked', isActive ? 'true' : 'false');
+            });
+            const select = document.getElementById('sortSelect');
+            if (select) select.value = mode;
+            applyFilters();
+        }
+
+        // Mirrors setSortMode when the mobile <select> is used instead of the pills
+        function setSortModeFromSelect(mode) {
+            currentSortMode = mode;
+            document.querySelectorAll('.sort-btn').forEach(btn => {
+                const isActive = btn.dataset.sort === mode;
+                btn.classList.toggle('active', isActive);
+                btn.setAttribute('aria-checked', isActive ? 'true' : 'false');
+            });
             applyFilters();
         }
 
@@ -1165,7 +1818,9 @@
             
             // Check for secret trigger phrase "نايف البابطين"
             if (rawQuery.includes('نايف البابطين') && !hasShownSecretModal) {
-                document.getElementById('secretModal').classList.add('active');
+                const secretEl = document.getElementById('secretModal');
+                secretEl.classList.add('active');
+                onOverlayOpen(secretEl);
                 hasShownSecretModal = true;
             } else if (!rawQuery.includes('نايف البابطين')) {
                 hasShownSecretModal = false; // Reset trigger when text is removed
@@ -1173,6 +1828,8 @@
 
             const grid = document.getElementById('teacherGrid');
             const cardsArray = Array.from(document.querySelectorAll('.teacher-card'));
+            const totalCount = cardsArray.length;
+            let visibleCount = 0;
 
             // Filter Step
             cardsArray.forEach(card => {
@@ -1186,10 +1843,20 @@
 
                 if (matchesGender && matchesSubject && matchesSearch) {
                     card.style.display = 'flex';
+                    visibleCount++;
                 } else {
                     card.style.display = 'none';
                 }
             });
+
+            const resultsCountEl = document.getElementById('resultsCount');
+            if (resultsCountEl) {
+                resultsCountEl.innerText = `إظهار ${visibleCount} من ${totalCount} معلم`;
+            }
+            const noResultsEl = document.getElementById('noResults');
+            if (noResultsEl) {
+                noResultsEl.hidden = visibleCount !== 0;
+            }
 
             // Sort Step
             cardsArray.sort((a, b) => {
@@ -1218,25 +1885,37 @@
             cardsArray.forEach(card => grid.appendChild(card));
         }
 
-        // Top Navigation Drawers
-        function openTabDrawer(tabKey) {
-            const overlay = document.getElementById('tabDrawerOverlay');
+        // Top Navigation Drawers (now with switchable tabs)
+        const drawerTitles = {
+            support: 'الدعم الفني المباشر',
+            faq: 'الأسئلة الشائعة',
+            guarantee: 'ضمان الجودة',
+            pricing: 'الباقات والخصومات'
+        };
+
+        function renderDrawerContent(tabKey) {
             const title = document.getElementById('drawerTitle');
             const body = document.getElementById('drawerBody');
 
+            document.querySelectorAll('.drawer-tab-btn').forEach(btn => {
+                const isActive = btn.dataset.tab === tabKey;
+                btn.classList.toggle('active', isActive);
+                btn.setAttribute('aria-selected', isActive ? 'true' : 'false');
+            });
+
+            title.innerText = drawerTitles[tabKey] || 'مركز المساعدة';
+
             if (tabKey === 'support') {
-                title.innerText = 'الدعم الفني المباشر';
                 body.innerHTML = `
                     <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">فريق الدعم متواجد لخدمتك على مدار الساعة.</p>
                     <form onsubmit="event.preventDefault(); closeTabDrawer(); showToast('تم إرسال رسالتك بنجاح!');">
-                        <div class="form-group"><label>الاسم الكامل</label><input type="text" required placeholder="اكتب اسمك"></div>
-                        <div class="form-group"><label>رقم التواصل</label><input type="text" required placeholder="05xxxxxxxx"></div>
-                        <div class="form-group"><label>الرسالة</label><textarea rows="4" placeholder="اكتب استفسارك هنا..."></textarea></div>
-                        <button class="cta-btn" style="width: 100%;">إرسال الرسالة</button>
+                        <div class="form-group"><label for="supportName">الاسم الكامل</label><input type="text" id="supportName" name="name" required placeholder="اكتب اسمك" autocomplete="name"></div>
+                        <div class="form-group"><label for="supportPhone">رقم التواصل</label><input type="tel" id="supportPhone" name="phone" required placeholder="05xxxxxxxx" inputmode="tel" pattern="05[0-9]{8}" autocomplete="tel" maxlength="10"></div>
+                        <div class="form-group"><label for="supportMessage">الرسالة</label><textarea id="supportMessage" name="message" rows="4" placeholder="اكتب استفسارك هنا..."></textarea></div>
+                        <button type="submit" class="cta-btn" style="width: 100%;">إرسال الرسالة</button>
                     </form>
                 `;
             } else if (tabKey === 'faq') {
-                title.innerText = 'الأسئلة الشائعة';
                 body.innerHTML = `
                     <div class="faq-item">
                         <h4>كيف يتم اختيار المعلم؟</h4>
@@ -1248,16 +1927,14 @@
                     </div>
                 `;
             } else if (tabKey === 'guarantee') {
-                title.innerText = 'ضمان الجودة';
                 body.innerHTML = `
                     <div style="text-align: center; padding: 1rem 0;">
-                        <i class="fa-solid fa-shield-heart" style="font-size: 3rem; color: var(--secondary); margin-bottom: 1rem;"></i>
+                        <i class="fa-solid fa-shield-heart" style="font-size: 3rem; color: var(--secondary); margin-bottom: 1rem;" aria-hidden="true"></i>
                         <h3 style="margin-bottom: 0.5rem;">حقك محفوظ 100%</h3>
                         <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6;">جميع الدروس مقيمة ومتابعة لضمان أعلى جودة تعليمية للطلاب.</p>
                     </div>
                 `;
             } else if (tabKey === 'pricing') {
-                title.innerText = 'الباقات والخصومات';
                 body.innerHTML = `
                     <div style="background: var(--bg-main); padding: 1.2rem; border-radius: 12px; margin-bottom: 1rem; border: 1px solid var(--border);">
                         <h4>باقة القدرات الشاملة</h4>
@@ -1265,38 +1942,88 @@
                     </div>
                 `;
             }
+        }
 
+        // Called by the top-bar buttons: opens the drawer and jumps straight to that tab
+        function openTabDrawer(tabKey) {
+            const overlay = document.getElementById('tabDrawerOverlay');
+            renderDrawerContent(tabKey);
             overlay.classList.add('active');
+            onOverlayOpen(overlay);
+        }
+
+        // Called by the tab buttons inside the drawer: switches content without closing
+        function switchDrawerTab(tabKey) {
+            renderDrawerContent(tabKey);
         }
 
         function closeTabDrawer() {
-            document.getElementById('tabDrawerOverlay').classList.remove('active');
+            const el = document.getElementById('tabDrawerOverlay');
+            el.classList.remove('active');
+            onOverlayClose(el);
         }
 
         // Payment Controls
         function openPayment(teacherName, price) {
             document.getElementById('payTeacherName').innerText = `حجز حصة مع: ${teacherName}`;
             document.getElementById('payTeacherPrice').innerText = `المبلغ الإجمالي: ${price} ر.س (شامل الضريبة)`;
-            document.getElementById('paymentModal').classList.add('active');
+            const el = document.getElementById('paymentModal');
+            el.classList.add('active');
+            onOverlayOpen(el);
         }
 
         function closePayment() {
-            document.getElementById('paymentModal').classList.remove('active');
+            const el = document.getElementById('paymentModal');
+            el.classList.remove('active');
+            onOverlayClose(el);
         }
 
         function selectPayMethod(btn) {
-            document.querySelectorAll('.pay-method-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.pay-method-btn').forEach(b => {
+                b.classList.remove('active');
+                b.setAttribute('aria-pressed', 'false');
+            });
             btn.classList.add('active');
+            btn.setAttribute('aria-pressed', 'true');
         }
 
         function processPayment() {
-            const phone = document.getElementById('payPhone').value;
-            if(!phone) {
-                alert('يرجى إدخال رقم الجوال للتأكيد');
+            const phoneInput = document.getElementById('payPhone');
+            const phone = phoneInput.value.trim();
+            const isValidSaudiPhone = /^05[0-9]{8}$/.test(phone);
+            if (!isValidSaudiPhone) {
+                alert('يرجى إدخال رقم جوال سعودي صحيح (يبدأ بـ 05 ويتكون من 10 أرقام)');
+                phoneInput.focus();
                 return;
             }
+
+            const teacherName = document.getElementById('payTeacherName').innerText.replace('حجز حصة مع: ', '');
+            const priceText = document.getElementById('payTeacherPrice').innerText;
+
+            sendBookingWhatsApp(teacherName, priceText, phone);
+
             closePayment();
-            showToast('تم إتمام الحجز والدفع بنجاح! تم إرسال تفاصيل الموعد لهاتفك.');
+            showToast('تم إتمام الحجز والدفع بنجاح! تم فتح واتساب لإرسال تفاصيل الحجز.');
+        }
+
+        // Build an Arabic booking-details message and open it in WhatsApp, pre-filled and ready to send
+        function sendBookingWhatsApp(teacherName, priceText, localPhone) {
+            const today = new Date();
+            const dateStr = today.toLocaleDateString('ar-SA', { year: 'numeric', month: 'long', day: 'numeric' });
+
+            const message =
+                `مرحباً 👋\n` +
+                `تم تأكيد حجزك في منصة *نُخبة*.\n\n` +
+                `👨‍🏫 المعلم: ${teacherName}\n` +
+                `💵 ${priceText}\n` +
+                `📅 تاريخ الحجز: ${dateStr}\n\n` +
+                `سيتم التواصل معك قريباً لتحديد موعد الحصة. شكراً لاختيارك نُخبة! 🌟`;
+
+            // Convert local Saudi format (05xxxxxxxx) to international format (9665xxxxxxxx)
+            const internationalPhone = '966' + localPhone.replace(/^0/, '');
+
+            const waUrl = `https://wa.me/${internationalPhone}?text=${encodeURIComponent(message)}`;
+            window.open(waUrl, '_blank', 'noopener');
         }
 
         // Toast Helper
@@ -1308,6 +2035,9 @@
                 toast.classList.remove('show');
             }, 3000);
         }
+
+        // Initialize results counter on page load
+        applyFilters();
     </script>
 </body>
 </html>
